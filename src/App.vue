@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!--
     <v-navigation-drawer
       persistent
       :mini-variant="miniVariant"
@@ -24,10 +25,13 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    -->
     <v-toolbar
       app
       :clipped-left="clipped"
+      flat="true"
     >
+    <!--
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
@@ -38,15 +42,23 @@
       <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>remove</v-icon>
       </v-btn>
+      -->
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn v-for="page in pages" v-bind:key="page" flat="true" @click.stop="current = page">
+        {{page}}
+      </v-btn>
+      <!--
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>menu</v-icon>
       </v-btn>
+      -->
     </v-toolbar>
     <v-content>
-      <HelloWorld/>
+      <component v-bind:is="current">
+      </component>
     </v-content>
+    <!--
     <v-navigation-drawer
       temporary
       :right="right"
@@ -63,34 +75,45 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    -->
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2017</span>
+      <span>&copy; 2018</span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import HelloWorld from './components/HelloWorld';
+import News from './components/News';
+import Technology from './components/Technology';
+import Contacts from './components/Contacts';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    News,
+    Technology,
+    Contacts,
   },
   data () {
     return {
       clipped: false,
-      drawer: true,
+      // drawer: true,
       fixed: false,
+      current: 'News',
+      pages: ['News', 'Technology', 'Contacts'],
+      /*
       items: [{
         icon: 'bubble_chart',
         title: 'Inspire'
       }],
+      */
       miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
-    }
-  }
-}
+      // right: true,
+      // rightDrawer: false,
+      title: 'Pluto',
+    };
+  },
+};
 </script>
